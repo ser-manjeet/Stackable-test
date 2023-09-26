@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Stackable - Gutenberg Blocks
+ * Plugin Name: Stackable - Gutenberg Blocks - Test
  * Plugin URI: https://wpstackable.com
  * Description: An Amazing Block Library That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
  * Author: Gambit Technologies, Inc
@@ -193,6 +193,8 @@ require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
 /**
  * Block Initializer.
  */
+
+require_once( plugin_dir_path( __FILE__ ) . 'src/class-stackable-blocks-css.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/editor-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );

@@ -27,44 +27,46 @@ export const Save = props => {
 		attributes,
 	} = props
 
-	const {
-		collapseOn = '',
-	} = attributes
+	return <InnerBlocks.Content />
 
-	const rowClass = getRowClasses( props.attributes )
-	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const responsiveClass = getResponsiveClasses( props.attributes )
+	// const {
+	// 	collapseOn = '',
+	// } = attributes
 
-	const blockClassName = classnames( [
-		props.className,
-		'stk-block-button-group',
-		responsiveClass,
-	] )
+	// const rowClass = getRowClasses( props.attributes )
+	// const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	// const responsiveClass = getResponsiveClasses( props.attributes )
 
-	const contentClassNames = classnames( [
-		rowClass,
-		'stk-inner-blocks',
-		blockAlignmentClass,
-		'stk-block-content',
-		'stk-button-group',
-		{
-			[ `stk--collapse-on-${ collapseOn }` ]: collapseOn,
-		},
-	] )
+	// const blockClassName = classnames( [
+	// 	props.className,
+	// 	'stk-block-button-group',
+	// 	responsiveClass,
+	// ] )
 
-	return (
-		<BlockDiv.Content
-			className={ blockClassName }
-			attributes={ attributes }
-			version={ props.version }
-		>
-			<ButtonGroupStyles.Content version={ props.version } attributes={ attributes } />
-			<CustomCSS.Content attributes={ attributes } />
-			<div className={ contentClassNames }>
-				<InnerBlocks.Content />
-			</div>
-		</BlockDiv.Content>
-	)
+	// const contentClassNames = classnames( [
+	// 	rowClass,
+	// 	'stk-inner-blocks',
+	// 	blockAlignmentClass,
+	// 	'stk-block-content',
+	// 	'stk-button-group',
+	// 	{
+	// 		[ `stk--collapse-on-${ collapseOn }` ]: collapseOn,
+	// 	},
+	// ] )
+
+	// return (
+	// 	<BlockDiv.Content
+	// 		className={ blockClassName }
+	// 		attributes={ attributes }
+	// 		version={ props.version }
+	// 	>
+	// 		<ButtonGroupStyles.Content version={ props.version } attributes={ attributes } />
+	// 		<CustomCSS.Content attributes={ attributes } />
+	// 		<div className={ contentClassNames }>
+	// 			<InnerBlocks.Content />
+	// 		</div>
+	// 	</BlockDiv.Content>
+	// )
 }
 
 export default withVersion( VERSION )( Save )

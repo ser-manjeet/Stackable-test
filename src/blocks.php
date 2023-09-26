@@ -200,3 +200,155 @@ if ( ! function_exists( 'stackable_add_excerpt_blocks' ) ) {
 
 	add_filter( 'excerpt_allowed_blocks', 'stackable_add_excerpt_blocks' );
 }
+
+
+
+if ( ! function_exists( 'stackable_blocks_hex2rgba' ) ) {
+	/**
+	 * Hex to RGBA
+	 *
+	 * @param string $hex string hex code.
+	 * @param number $alpha alpha number.
+	 */
+	function stackable_blocks_hex2rgba( $hex, $alpha ) {
+		if ( empty( $hex ) ) {
+			return '';
+		}
+		if ( 'transparent' === $hex ) {
+			return $hex;
+		}
+		$hex = str_replace( '#', '', $hex );
+		if ( strlen( $hex ) == 3 ) {
+			$r = hexdec( substr( $hex, 0, 1 ) . substr( $hex, 0, 1 ) );
+			$g = hexdec( substr( $hex, 1, 1 ) . substr( $hex, 1, 1 ) );
+			$b = hexdec( substr( $hex, 2, 1 ) . substr( $hex, 2, 1 ) );
+		} else {
+			$r = hexdec( substr( $hex, 0, 2 ) );
+			$g = hexdec( substr( $hex, 2, 2 ) );
+			$b = hexdec( substr( $hex, 4, 2 ) );
+		}
+		$rgba = 'rgba(' . $r . ', ' . $g . ', ' . $b . ', ' . $alpha . ')';
+		return $rgba;
+	}
+}
+
+
+if ( ! function_exists( 'get_classnames' ) ) {
+	/**
+	 * Array to string function for html classes
+	 */
+
+	function get_classnames( ...$classes ) {
+		$result = [];
+
+		foreach ( $classes as $key => $class ) {
+			if ( is_array( $class ) ) {
+				// Recursively handle nested arrays
+				$result[] = get_classnames( ...$class );
+			} elseif ( is_string( $class ) && ! empty( $class ) ) {
+				$result[] = $class;
+			} elseif ( is_bool( $class ) && true === $class ) {
+				$result[] = $key;
+			}
+		}
+
+		return implode(' ', $result);
+	}
+}
+
+
+if ( ! function_exists( 'getAlignmentClasses' ) ) {
+	/**
+	 * function to get block aligment classes using blocks attributes
+	 *
+	 * @param array $attributes
+	 * @return string
+	 */
+	function getAlignmentClasses($attributes) {
+		$innerBlocksClass = [];
+	
+		if ( ! empty( $attributes['contentAlign'] ) ) {
+			$innerBlocksClass[] = "has-text-align-{$attributes['contentAlign']}";
+		}
+	
+		if ( ! empty( $attributes['contentAlignTablet'] ) ) {
+			$innerBlocksClass[] = "has-text-align-{$attributes['contentAlignTablet']}-tablet";
+		}
+	
+		if ( ! empty( $attributes['contentAlignMobile'] ) ) {
+			$innerBlocksClass[] = "has-text-align-{$attributes['contentAlignMobile']}-mobile";
+		}
+	
+		if ( ! empty( $attributes['innerBlockOrientation'] ) && $attributes['innerBlockOrientation'] === 'horizontal' ) {
+			$innerBlocksClass[] = 'stk--block-horizontal-flex';
+		}
+	
+		if ( ! empty( $attributes['innerBlockJustify'] ) || ! empty( $attributes['innerBlockAlign'] ) ) {
+			$innerBlocksClass[] = 'stk--column-flex';
+		}
+	
+		if ( ! empty( $attributes['uniqueId'] ) ) {
+			$innerBlocksClass[] = "stk--block-align-{$attributes['uniqueId']}";
+		}
+	
+		if ( ! empty( $attributes['rowAlign'] ) || ! empty( $attributes['rowAlignTablet'] ) || ! empty( $attributes['rowAlignMobile'] ) ) {
+			$innerBlocksClass[] = "stk--block-align-{$attributes['uniqueId']}";
+		}
+	
+		return implode(' ', $innerBlocksClass);
+	}
+}
+
+if ( ! function_exists( 'getResponsiveClasses' ) ) {
+	function getResponsiveClasses($attributes) {
+		$responsiveClasses = [
+			'stk--hide-desktop' => isset( $attributes['hideDesktop'] ) ? $attributes['hideDesktop'] : '',
+			'stk--hide-tablet' => isset( $attributes['hideTablet'] ) ? $attributes['hideTablet'] : '',
+			'stk--hide-mobile' => isset( $attributes['hideMobile'] ) ? $attributes['hideMobile'] : ''
+		];
+	
+		return get_classnames($responsiveClasses);
+	}
+}
+
+if ( ! function_exists( 'getUniqueBlockClass' ) ) {
+	function getUniqueBlockClass( $attributes ) {
+		return isset( $attributes['uniqueId'] ) ? "stk-" . $attributes['uniqueId'] : '';
+	}
+}
+
+if ( ! function_exists( 'getTypographyClasses' ) ) {
+	function getTypographyClasses($attributes = []) {
+		return get_classnames([
+			'stk--is-gradient' => isset( $attributes['textColorType'] ) && $attributes['textColorType'] === 'gradient',
+			'has-text-color' => ! empty( $attributes['textColor1'] ),
+			getAttrName( $attributes, 'textColorClass' ),
+			sprintf('has-text-align-%s', getAttrName( $attributes, 'textAlign' )) => getAttrName( $attributes, 'textAlign' ),
+			sprintf('has-text-align-%s-tablet', getAttrName( $attributes, 'textAlignTablet' )) => getAttrName( $attributes, 'textAlignTablet' ),
+			sprintf('has-text-align-%s-mobile', getAttrName( $attributes, 'textAlignMobile' )) => getAttrName( $attributes, 'textAlignMobile' ),
+		]);
+	}
+	
+}
+
+if ( ! function_exists( 'getAttrName' ) ) {
+	function getAttrName( $attributes = [], $key ) {
+		if ( isset( $attributes[ $key ] ) ) {
+			return $attributes[ $key ];
+		}
+		return '';
+	}
+}
+
+if ( ! function_exists( '' ) ) {
+	function getBlockClasses($attributes = []) {
+		$classes = [
+			'stk-block-background'          => ! empty( $attributes['hasBackground'] ),
+			'stk--block-margin-top-auto'    => isset( $attributes['blockMargin']['top'] ) && $attributes['blockMargin']['top'] === 'auto',
+			'stk--block-margin-bottom-auto' => isset( $attributes['blockMargin']['bottom'] ) && $attributes['blockMargin']['bottom'] === 'auto',
+			'stk--has-lightbox'             => ! empty( $attributes['blockLinkHasLightbox'] ) || ! empty( $attributes['linkHasLightbox'] ),
+			'stk--has-background-overlay'   => ! empty( $attributes['hasBackground'] ) && (  ( isset($attributes['backgroundColorType']) && $attributes['backgroundColorType'] === 'gradient' ) ||  ! empty( $attributes['backgroundUrl'] ) ||  ! empty( $attributes['backgroundUrlTablet'] ) ||  ! empty( $attributes['backgroundUrlMobile'] ) ),
+		];
+		return $classes;
+	}
+}

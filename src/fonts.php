@@ -38,13 +38,13 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 
 			$block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
 			if ( $this->is_stackable_block( $block_name ) && is_array( $block['attrs'] ) ) {
-				if ( stripos( $block_content, 'family' ) !== false ) {
-					foreach ( $block['attrs'] as $attr_name => $font_name ) {
-						if ( str_ends_with( strtolower( $attr_name ), 'fontfamily' ) ) {
-							self::register_font( $font_name );
-						}
+				foreach ( $block['attrs'] as $attr_name => $font_name ) {
+					if ( str_ends_with( strtolower( $attr_name ), 'fontfamily' ) ) {
+						self::register_font( $font_name );
 					}
 				}
+				// if ( stripos( $block_content, 'family' ) !== false ) {
+				// }
 			}
 
 			return $block_content;

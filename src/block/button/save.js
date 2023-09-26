@@ -31,19 +31,18 @@ export const Save = props => {
 		className,
 		...propsToPass
 	} = props
-
-	const responsiveClass = getResponsiveClasses( props.attributes )
-	const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
+	// const responsiveClass = getResponsiveClasses( props.attributes )
+	// const customAttributes = CustomAttributes.getCustomAttributes( props.attributes )
+	// const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
-	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
-	const blockClassNames = classnames( [
-		className,
-		'stk-block-button',
-		blockAlignmentClass,
-		responsiveClass,
-	] )
+	// const blockClassNames = classnames( [
+	// 	className,
+	// 	'stk-block-button',
+	// 	blockAlignmentClass,
+	// 	responsiveClass,
+	// ] )
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
@@ -51,31 +50,39 @@ export const Save = props => {
 	] )
 
 	return (
-		<BlockDiv.Content
-			{ ...useBlockProps.save( { className: blockClassNames } ) }
+		<Typography.Content
 			attributes={ props.attributes }
-			applyAdvancedAttributes={ false }
-			applyCustomAttributes={ false }
-			version={ props.version }
-		>
-			<ButtonStyles.Content { ...propsToPass } />
-			<CustomCSS.Content attributes={ props.attributes } />
-			<Button.Content
-				{ ...propsToPass }
-				attributes={ props.attributes }
-				buttonProps={ {
-					id: props.attributes.anchor || undefined,
-					...customAttributes,
-				} }
-			>
-				<Typography.Content
-					attributes={ props.attributes }
-					tagName="span"
-					className={ typographyInnerClassNames }
-				/>
-			</Button.Content>
-		</BlockDiv.Content>
+			tagName="span"
+			className={ typographyInnerClassNames }
+		/>
 	)
+
+	// return (
+	// 	<BlockDiv.Content
+	// 		{ ...useBlockProps.save( { className: blockClassNames } ) }
+	// 		attributes={ props.attributes }
+	// 		applyAdvancedAttributes={ false }
+	// 		applyCustomAttributes={ false }
+	// 		version={ props.version }
+	// 	>
+	// 		<ButtonStyles.Content { ...propsToPass } />
+	// 		<CustomCSS.Content attributes={ props.attributes } />
+	// 		<Button.Content
+	// 			{ ...propsToPass }
+	// 			attributes={ props.attributes }
+	// 			buttonProps={ {
+	// 				id: props.attributes.anchor || undefined,
+	// 				...customAttributes,
+	// 			} }
+	// 		>
+	// 			<Typography.Content
+	// 				attributes={ props.attributes }
+	// 				tagName="span"
+	// 				className={ typographyInnerClassNames }
+	// 			/>
+	// 		</Button.Content>
+	// 	</BlockDiv.Content>
+	// )
 }
 
 export default compose(
