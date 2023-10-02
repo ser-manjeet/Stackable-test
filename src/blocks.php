@@ -238,20 +238,20 @@ if ( ! function_exists( 'get_classnames' ) ) {
 	 * Array to string function for html classes
 	 */
 
-	function get_classnames( ...$classes ) {
+	 function get_classnames($classes) {
 		$result = [];
-
-		foreach ( $classes as $key => $class ) {
-			if ( is_array( $class ) ) {
+	
+		foreach ($classes as $key => $class) {
+			if (is_array($class)) {
 				// Recursively handle nested arrays
-				$result[] = get_classnames( ...$class );
-			} elseif ( is_string( $class ) && ! empty( $class ) ) {
+				$result[] = get_classnames($class);
+			} elseif (is_string($class) && !empty($class)) {
 				$result[] = $class;
-			} elseif ( is_bool( $class ) && true === $class ) {
+			} elseif (is_bool($class) && $class === true) {
 				$result[] = $key;
 			}
 		}
-
+	
 		return implode(' ', $result);
 	}
 }
